@@ -6,16 +6,24 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class HttpServiceService {
-  url;
+ url;
+ fetchAllJobs = true;
+ flag = true;
  jobs = new Subject<any>();
+ displayInitialJobs = new Subject<any>();
  allJobs;
-  
+ initialJobs;
+
   constructor(private http: HttpClient) { }
   
-  getJob(jobType){
-    this.url = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=" + jobType;
+  getJob(searchText){
+    this.url = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?search=" + searchText;
       this.http.get<any>(this.url).subscribe(data=>{
         this.allJobs = data;
+        if(this.fetchAllJobs){
+          this.initialJobs= data;
+          this.fetchAllJobs = false;
+        }
         this.jobs.next(data);
     },error =>{
       console.log(error);
@@ -30,6 +38,11 @@ export class HttpServiceService {
         return this.allJobs[i].description;
       }
     }
+  }
+
+  displayAllJobs(){
+    this.flag = !this.flag;
+    this.displayInitialJobs.next(this.initialJobs);
   }
 
 }

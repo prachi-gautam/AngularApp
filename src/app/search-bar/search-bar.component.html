@@ -1,2 +1,8 @@
-<input label="Enter Job title" [(ngModel)]="searchText" name="search">
-<button (click)="searchJobs()">Search</button>
+<div class="row">
+    <div class="col-md-4">
+        <input placeholder="What are you looking for ?" (ngModelChange)="shouldfetch()" [(ngModel)]="searchText" class="form-control" name="search">
+    </div>
+    <div class="col-md-2">
+        <button (click)="searchJobs()" type="button" class="btn btn-primary">Search</button>
+    </div>    
+</div>

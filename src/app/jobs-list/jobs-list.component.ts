@@ -10,11 +10,16 @@ import { Router } from '@angular/router';
 export class JobsListComponent implements OnInit {
   jobs;
   subscription;
+  allJobsSubscription;
   constructor(private jobService: HttpServiceService, private route: Router) { }
 
   ngOnInit() {
     this.subscription = this.jobService.jobs.subscribe(data=>{
       this.jobs = data;
+    })
+
+    this.allJobsSubscription = this.jobService.displayInitialJobs.subscribe(data => {
+      this.jobs = this.jobService.initialJobs;
     })
   }
 
@@ -24,6 +29,7 @@ export class JobsListComponent implements OnInit {
 
   ngOnDestroy(){
     this.subscription.unsubscribe();
+    this.allJobsSubscription.unsubscribe();
   }
 
 }

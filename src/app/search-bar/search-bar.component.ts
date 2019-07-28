@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpServiceService } from '../http-service.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-search-bar',
@@ -8,6 +9,8 @@ import { HttpServiceService } from '../http-service.service';
 })
 export class SearchBarComponent implements OnInit {
   searchText="";
+  
+  
   constructor(private httpService:HttpServiceService) { }
 
   ngOnInit() {
@@ -16,6 +19,12 @@ export class SearchBarComponent implements OnInit {
 
   searchJobs(){
     this.httpService.getJob(this.searchText);
+  }
+
+  shouldfetch(){
+    if(this.searchText.length==1){
+      this.httpService.displayAllJobs();
+    }
   }
 
 }
