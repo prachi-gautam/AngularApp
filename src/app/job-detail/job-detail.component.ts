@@ -12,12 +12,19 @@ export class JobDetailComponent implements OnInit {
   jobDescription;
   constructor(private router: Router,private route: ActivatedRoute, private httpService: HttpServiceService) { }
 
+  //calling service class method for getting job description by id
   ngOnInit() {
     this.jobId = this.route.snapshot.paramMap.get('id');
-    this.jobDescription = this.httpService.getJobDescription(this.jobId);
-    document.getElementById('myDiv').innerHTML = this.jobDescription;
+    this.httpService.getJobDescription(this.jobId).subscribe(data =>{ 
+    this.jobDescription=data['description']
+    }
+    ,error =>{
+      
+      this.jobDescription="No Data Found For this Job .. Please try again later !!";
+    });
   }
 
+  //Method to navigate to job list
   goToJobTitle(){
     this.router.navigate(['/jobList']);
   }

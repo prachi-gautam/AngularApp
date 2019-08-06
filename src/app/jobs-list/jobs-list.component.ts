@@ -23,10 +23,13 @@ export class JobsListComponent implements OnInit {
     })
   }
 
+  //Method to navigate to job description by id
   getDescription(job){
     this.route.navigate(['/jobdescription',job.id]);
   }
 
+
+//To unsubscribe the subscribed data and observables.
   ngOnDestroy(){
     this.subscription.unsubscribe();
     this.allJobsSubscription.unsubscribe();

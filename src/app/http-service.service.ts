@@ -16,6 +16,7 @@ export class HttpServiceService {
 
   constructor(private http: HttpClient) { }
   
+  //Method for getting JOb List on basis of search Text
   getJob(searchText){
     this.url = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?search=" + searchText;
       this.http.get<any>(this.url).subscribe(data=>{
@@ -29,17 +30,15 @@ export class HttpServiceService {
       console.log(error);
     });
   }
-
+ //Method for getting job description by id
   getJobDescription(id){
-    var i;
-    const len = this.allJobs.length;
-    for(i=0;i<=len;i++){
-      if(this.allJobs[i].id == id){
-        return this.allJobs[i].description;
-      }
-    }
+     return this.http.get("https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions/"+id+".json");
+     
+    
+ 
   }
 
+  //Method for displaying All jobs when search box is cleared
   displayAllJobs(){
     this.flag = !this.flag;
     this.displayInitialJobs.next(this.initialJobs);
